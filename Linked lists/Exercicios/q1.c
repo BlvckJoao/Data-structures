@@ -78,3 +78,35 @@ node* separa(node* l, int n) {
     return separada;
 }
 
+node* merge(node* l1, node* l2) {
+    node* result = NULL;
+
+    while (l1 != NULL && l2 != NULL) {
+        insertBack(&result, l1->info);
+        insertBack(&result, l2->info);
+        l1 = l1->next;
+        l2 = l2->next;
+    }
+
+    while (l1 != NULL) {
+        insertBack(&result, l1->info);
+        l1 = l1->next;
+    }
+
+    while (l2 != NULL) {
+        insertBack(&result, l2->info);
+        l2 = l2->next;
+    }
+
+    return result;
+}
+
+node* invert(node* l) {
+    node* inverted = NULL;
+
+    while(l != NULL) {
+        insertFront(&inverted, l->info);
+    }
+    return inverted;
+}
+
