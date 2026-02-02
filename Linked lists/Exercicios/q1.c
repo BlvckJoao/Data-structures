@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "../lista.h"
 
 int comprimento(node* l) {
@@ -112,8 +113,9 @@ node* invert(node* l) {
 
 int is_equal(node* l1, node* l2) {
     while (l1 != NULL && l2 != NULL) {
-        if (l1->info != l2->info)
+        if (strcmp(l1->info, l2->info) != 0)
             return 0;
+
         l1 = l1->next;
         l2 = l2->next;
     }
@@ -122,7 +124,31 @@ int is_equal(node* l1, node* l2) {
 }
 
 node* copia(node* l) {
-    return l;
+    node* result = NULL;
+    node* tail = NULL;
+
+    while (l != NULL) {
+        node* novo = malloc(sizeof(node));
+        if (!novo) return NULL;
+
+        novo->info = malloc(strlen(l->info) + 1);
+        if (!novo->info) return NULL;
+
+        strcpy(novo->info, l->info);
+        novo->next = NULL;
+
+        if (result == NULL) {
+            result = novo;
+            tail = novo;
+        } else {
+            tail->next = novo;
+            tail = novo;
+        }
+
+        l = l->next;
+    }
+
+    return result;
 }
 
 int remove_lista_circular(node** head, int info) {
