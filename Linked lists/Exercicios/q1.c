@@ -110,3 +110,78 @@ node* invert(node* l) {
     return inverted;
 }
 
+int is_equal(node* l1, node* l2) {
+    while (l1 != NULL && l2 != NULL) {
+        if (l1->info != l2->info)
+            return 0;
+        l1 = l1->next;
+        l2 = l2->next;
+    }
+
+    return l1 == NULL && l2 == NULL;
+}
+
+node* copia(node* l) {
+    return l;
+}
+
+int remove_lista_circular(node** head, int info) {
+    if (*head == NULL) return 0;
+
+    node* aux = *head;
+
+    do {
+        if (aux->info == info) {
+
+            // Caso: único nó da lista
+            if (aux->next == aux) {
+                free(aux);
+                *head = NULL;
+                return 1;
+            }
+
+            // Ajusta os ponteiros
+            aux->prev->next = aux->next;
+            aux->next->prev = aux->prev;
+
+            // Se for o head, move o head
+            if (aux == *head)
+                *head = aux->next;
+
+            free(aux);
+            return 1;
+        }
+
+        aux = aux->next;
+    } while (aux != *head);
+
+    // info não encontrado
+    return 0;
+}
+
+int insert_before_head(node** head, int info) {
+    node* novo = malloc(sizeof(node));
+    if (novo == NULL) return 0;
+
+    novo->info = info;
+
+    // Caso lista vazia
+    if (*head == NULL) {
+        novo->next = novo;
+        novo->prev = novo;
+        *head = novo;
+        return 1;
+    }
+
+    node* last = (*head)->prev;
+
+    // Liga o novo nó
+    novo->next = *head;
+    novo->prev = last;
+
+    // Ajusta os vizinhos
+    last->next = novo;
+    (*head)->prev = novo;
+
+    return 1;
+}
