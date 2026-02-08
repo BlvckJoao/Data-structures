@@ -54,6 +54,7 @@ node* retira_n(node* l, int n) {
 
     while (l != NULL) {
         if(l->info > n) {
+            
             insertBack(&result, l->info);
         }
         l = l->next;
