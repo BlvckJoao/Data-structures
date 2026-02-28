@@ -2,6 +2,12 @@
 #include <stdlib.h>
 #include "queue.h"
 
+typedef struct queue {
+	int elements[QUEUE_SIZE];
+	int start;
+	int end;
+}Queue;
+
 Queue* create_queue() {
 	Queue* q = (Queue*)malloc(sizeof(Queue));
 	q->start = 0;
@@ -22,6 +28,15 @@ int queue_is_full(Queue* q){
 
 	if((q->end + 1) % QUEUE_SIZE == q->start) return 1;
 	return 0;
+}
+
+int queue_size(Queue* q){
+    if(!q) return -1;
+
+    if(q->end >= q->start)
+        return q->end - q->start;
+
+    return QUEUE_SIZE - q->start + q->end;
 }
 
 int queue_insert(Queue* q, int info){
@@ -47,10 +62,12 @@ int queue_remove(Queue* q, int* rm_value){
     	return 1;
 }
 
-void queue_free(Queue* q){
-	if(!q) return;
-	q = NULL;
-	free(q);
+void queue_free(Queue** pq){
+	if(!pq) return;
+	free(*pq);
+	pq = NULL;
+	
+	return;
 }
 
 void queue_print(Queue* q){

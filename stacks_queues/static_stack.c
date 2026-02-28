@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "stack.c"
-
-#define MAX_SIZE 10
+#include "stack.h"
 
 typedef struct stack{
 	int values[MAX_SIZE];
@@ -56,14 +54,15 @@ int stack_push(Stack* s, int info){
 	return 1;
 }
 
-int stack_pop(Stack* s){
+int stack_pop(Stack* s, int* pop_value){
 	if(s == NULL) return -1;
 	if(stack_is_empty(s)) return 0;
-
-	int temp = s->values[s->top];
+	if(pop_value != NULL){
+		*(pop_value) = s->values[s->top];
+	}
 	s->values[s->top] = 0;
 	s->top--;
-	return temp;
+	return 1;
 }
 
 int stack_top(Stack* s){
