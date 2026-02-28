@@ -3,7 +3,7 @@
 #include "stack.h"
 
 typedef struct stack{
-	int values[MAX_SIZE];
+	int values[STACK_SIZE];
 	int top;
 }Stack;
 
@@ -26,7 +26,7 @@ void stack_free(Stack** ps){
 int stack_is_full(Stack* s){
 	if(s == NULL) return -1;
 
-	if(s->top == MAX_SIZE - 1) return 1;
+	if(s->top == STACK_SIZE - 1) return 1;
 	return 0;
 }
 
