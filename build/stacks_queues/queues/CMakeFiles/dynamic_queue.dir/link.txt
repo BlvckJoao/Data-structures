@@ -1,0 +1,2 @@
+/usr/bin/ar qc ../../lib/libdynamic_queue.a CMakeFiles/dynamic_queue.dir/src/dynamic_queue.c.o
+/usr/bin/ranlib ../../lib/libdynamic_queue.a

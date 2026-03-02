@@ -108,22 +108,117 @@ Duas implementações de filas (FIFO - First In, First Out):
 
 ## 🔧 Compilação e Uso
 
-### Compilar individual:
+### Requisitos
+- **CMake** 3.10 ou superior
+- **GCC** ou Clang (compilador C99 ou superior)
+- **Linux/Unix** ou **Windows (WSL/MSYS2)**
+
+**📖 Para um guia detalhado sobre CMake, veja [CMAKE.md](CMAKE.md)**
+
+### Opção 1: Compilação com CMake (Recomendado)
+
+#### Configure e compile:
+```bash
+# 1. Criar diretório de build
+mkdir build
+cd build
+
+# 2. Configurar o projeto
+cmake ..
+
+# 3. Compilar
+cmake --build .
+
+# Ou usar make diretamente
+make
+```
+
+#### Resultado:
+- Bibliotecas compiladas em `build/lib/`
+- Executáveis em `build/bin/`
+
+#### Executar exercícios:
+```bash
+./build/bin/lista_exercicio
+```
+
+### Opção 2: Compilação Manual (GCC)
+
+#### Compilar individual:
 ```bash
 # Lista ligada
 gcc -c linked_lists/lista.c -o lista.o
 
 # Stack estática
-gcc -c stacks_queues/static_stack.c -o static_stack.o
+gcc -c stacks_queues/stacks/src/static_stack.c -o static_stack.o
 
 # Stack dinâmica
-gcc -c stacks_queues/dynamic_stack.c -o dynamic_stack.o
+gcc -c stacks_queues/stacks/src/dynamic_stack.c -o dynamic_stack.o
 
 # Queue estática
-gcc -c stacks_queues/static_queue.c -o static_queue.o
+gcc -c stacks_queues/queues/src/static_queue.c -o static_queue.o
 
 # Queue dinâmica
-gcc -c stacks_queues/dynamic_queue.c -o dynamic_queue.o
+gcc -c stacks_queues/queues/src/dynamic_queue.c -o dynamic_queue.o
+```
+
+#### Compilar com exercício:
+```bash
+gcc -Wall -Wextra linked_lists/lista.c linked_lists/Exercicios/q1.c -o lista_exercicio
+./lista_exercicio
+```
+
+### Limpeza dos arquivos compilados
+
+#### Com CMake:
+```bash
+# Remover diretório de build
+rm -rf build
+
+# Ou reconstruir do zero
+rm -rf build && mkdir build && cd build && cmake .. && make
+```
+
+#### Com compilação manual:
+```bash
+rm -f *.o *.a lista_exercicio
+```
+
+### Estrutura de Saída do Build
+
+Após compilar com CMake, a estrutura será:
+
+```
+build/
+├── lib/                          # Bibliotecas compiladas
+│   ├── liblista.a
+│   ├── libstatic_stack.a
+│   ├── libdynamic_stack.a
+│   ├── libstatic_queue.a
+│   └── libdynamic_queue.a
+├── bin/                          # Executáveis (se houver)
+└── CMakeFiles/                   # Arquivos internos do CMake
+```
+
+### Uso das Bibliotecas
+
+Para usar as bibliotecas em seus próprios projetos:
+
+```cmake
+# No seu CMakeLists.txt
+link_directories(${CMAKE_CURRENT_LIST_DIR}/Data-structures/build/lib)
+target_link_libraries(seu_projeto liblista libstatic_stack libdynamic_queue)
+```
+
+Ou em compilação manual:
+
+```bash
+gcc -I./Data-structures/linked_lists \
+    -I./Data-structures/stacks_queues/stacks/include/stack \
+    seu_programa.c \
+    ./Data-structures/build/lib/liblista.a \
+    ./Data-structures/build/lib/libstatic_stack.a \
+    -o seu_programa
 ```
 
 ### Exemplo de uso (Lista Ligada):
@@ -150,19 +245,31 @@ int main() {
 
 ```
 Data-structures/
+├── CMakeLists.txt                    # Configuração CMake principal
 ├── README.md
 ├── linked_lists/
+│   ├── CMakeLists.txt
 │   ├── lista.h
 │   ├── lista.c
 │   └── Exercicios/
 │       └── q1.c
 └── stacks_queues/
-    ├── stack.h
-    ├── queue.h
-    ├── static_stack.c
-    ├── dynamic_stack.c
-    ├── static_queue.c
-    └── dynamic_queue.c
+    ├── stacks/
+    │   ├── CMakeLists.txt
+    │   ├── include/
+    │   │   └── stack/
+    │   │       └── stack.h
+    │   └── src/
+    │       ├── static_stack.c
+    │       └── dynamic_stack.c
+    └── queues/
+        ├── CMakeLists.txt
+        ├── include/
+        │   └── queue/
+        │       └── queue.h
+        └── src/
+            ├── static_queue.c
+            └── dynamic_queue.c
 ```
 
 ---
@@ -192,13 +299,47 @@ Este projeto consolidou o conhecimento em:
 
 ---
 
+## �️ Desenvolvimento
+
+### Estrutura do Build com CMake
+- **CMakeLists.txt** na raiz coordena os submódulos
+- **CMakeLists.txt** em cada módulo define suas bibliotecas
+- As bibliotecas são compiladas com seus headers inclusos
+- Exercícios são vinculados às suas respectativas bibliotecas
+
+### Status das Implementações
+
+**Compilando com sucesso:**
+- ✅ Lista ligada (`lista.c`)
+- ✅ Pilha estática (`static_stack.c`)
+- ✅ Pilha dinâmica (`dynamic_stack.c`)
+- ✅ Fila estática (`static_queue.c`)
+- ✅ Fila dinâmica (`dynamic_queue.c`)
+
+**Em desenvolvimento (comentadas no CMakeLists):**
+- 🔧 Pilha ligada (`linked_stack.c`) - Conflitos de assinatura de funções
+- 🔧 Fila ligada (`linked_queue.c`) - Pendente de validação
+- 🔧 Exercícios com Lista Ligada (`q1.c`) - Requer refatoração da API
+
+### Adicionar novos exercícios
+1. Criar arquivo `.c` em `linked_lists/Exercicios/`
+2. Adicionar ao `CMakeLists.txt` de `linked_lists/`:
+   ```cmake
+   add_executable(seu_exercicio Exercicios/seu_exercicio.c)
+   target_link_libraries(seu_exercicio PRIVATE lista)
+   ```
+3. Executar `cmake --build build` para compilar
+
+---
+
 ## 📝 Notas de Implementação
 
 - Todas as funções retornam valores de erro para tratamento
 - Uso de `typedef` para ocultar detalhes de implementação
 - Headers bem definidos para modularização
 - Compatível com compiladores C99 ou superior
+- Headers localizados em diretórios `include/` para melhor organização
 
 ---
 
-**Último commit:** 28 de Fevereiro de 2026
+**Último commit:** 2 de Março de 2026

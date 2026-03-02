@@ -1,0 +1,2 @@
+/usr/bin/ar qc ../../lib/libdynamic_stack.a CMakeFiles/dynamic_stack.dir/src/dynamic_stack.c.o
+/usr/bin/ranlib ../../lib/libdynamic_stack.a

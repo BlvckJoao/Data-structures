@@ -1,0 +1,13 @@
+/home/joao-pedro/Área de trabalho/Curso/p4/Estrutura de dados/Data-structures/build/CMakeFiles/edit_cache.dir
+/home/joao-pedro/Área de trabalho/Curso/p4/Estrutura de dados/Data-structures/build/CMakeFiles/rebuild_cache.dir
+/home/joao-pedro/Área de trabalho/Curso/p4/Estrutura de dados/Data-structures/build/linked_lists/CMakeFiles/lista.dir
+/home/joao-pedro/Área de trabalho/Curso/p4/Estrutura de dados/Data-structures/build/linked_lists/CMakeFiles/edit_cache.dir
+/home/joao-pedro/Área de trabalho/Curso/p4/Estrutura de dados/Data-structures/build/linked_lists/CMakeFiles/rebuild_cache.dir
+/home/joao-pedro/Área de trabalho/Curso/p4/Estrutura de dados/Data-structures/build/stacks_queues/stacks/CMakeFiles/static_stack.dir
+/home/joao-pedro/Área de trabalho/Curso/p4/Estrutura de dados/Data-structures/build/stacks_queues/stacks/CMakeFiles/dynamic_stack.dir
+/home/joao-pedro/Área de trabalho/Curso/p4/Estrutura de dados/Data-structures/build/stacks_queues/stacks/CMakeFiles/edit_cache.dir
+/home/joao-pedro/Área de trabalho/Curso/p4/Estrutura de dados/Data-structures/build/stacks_queues/stacks/CMakeFiles/rebuild_cache.dir
+/home/joao-pedro/Área de trabalho/Curso/p4/Estrutura de dados/Data-structures/build/stacks_queues/queues/CMakeFiles/static_queue.dir
+/home/joao-pedro/Área de trabalho/Curso/p4/Estrutura de dados/Data-structures/build/stacks_queues/queues/CMakeFiles/dynamic_queue.dir
+/home/joao-pedro/Área de trabalho/Curso/p4/Estrutura de dados/Data-structures/build/stacks_queues/queues/CMakeFiles/edit_cache.dir
+/home/joao-pedro/Área de trabalho/Curso/p4/Estrutura de dados/Data-structures/build/stacks_queues/queues/CMakeFiles/rebuild_cache.dir

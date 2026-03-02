@@ -1,0 +1,2 @@
+/usr/bin/ar qc ../../lib/libstatic_queue.a CMakeFiles/static_queue.dir/src/static_queue.c.o
+/usr/bin/ranlib ../../lib/libstatic_queue.a
