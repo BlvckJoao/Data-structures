@@ -1,18 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "include/tree.h"
-
-typedef struct node {
-        int info;
-        struct node* left_child;
-        struct node* right_child;
-} Node;
-
-typedef struct node_BST {
-        Node* root;
-} BST;
-
-//funções
+#include "include/node_bst.h"
 
 BST* bst_create() {
         BST* bst = (BST*)malloc(sizeof(BST));
@@ -172,3 +160,87 @@ int bst_right_double_rotation(Node** n) {
         if (!bst_left_rotation(&(*n)->right_child)) return 0;
         return bst_left_rotation(n);
 }
+
+//funções de exercicio
+
+int bst_pares(BST* t) {
+        if (!t) return -1;
+        return bst_node_pares(t->root);
+}
+
+int bst_node_pares(Node* n){
+        if(!n) return 0;
+        int count = 0;
+        if(n->info % 2 == 0) count++;
+        //pecorre a arvore em pre-ordem para contar os nós pares
+        count += bst_node_pares(n->left_child);
+        count += bst_node_pares(n->right_child);
+        return count;
+}
+
+int bst_folhas(BST* t) {
+        if (!t) return -1;
+        return bst_node_folhas(t->root);
+}
+
+int bst_node_folhas(Node* t){
+        if(!t) return 0;
+
+        int count = 0;
+
+        count += bst_node_folhas(t->left_child);
+        count += bst_node_folhas(t->right_child);
+        if(t->left_child == NULL && t->right_child == NULL) count++;
+
+        return count;
+}
+
+int bst_umfilho(BST* t) {
+        if (!t) return -1;
+        return bst_node_umfilho(t->root);
+}
+
+int bst_node_umfilho(Node* t){
+        if(!t) return 0;
+
+        int count = 0;
+
+        count += bst_node_umfilho(t->left_child);
+        count += bst_node_umfilho(t->right_child);
+        if(t->left_child == NULL && t->right_child != NULL ||
+           t->left_child != NULL && t->right_child == NULL ) count++;
+
+        return count;
+}
+
+int bst_igual(BST* a, BST* b){
+        if(!a || !b) return -1;
+        return bst_node_igual(a->root, b->root);
+}
+
+int bst_node_igual(Node* a, Node* b){
+        if(a == NULL && b == NULL) return 1;
+        if(a == NULL || b == NULL) return 0;
+        
+        return (a->info == b->info) && 
+               bst_node_igual(a->left_child, b->left_child) && 
+               bst_node_igual(a->right_child, b->right_child);
+}
+
+BST* bst_copia(BST* t) {
+        if (!t) return NULL;
+        BST* copy = bst_create();
+        if (!copy) return NULL;
+        bst_node_copia(t->root, &copy->root);
+        return copy;
+}
+
+void bst_node_copia(Node* src, Node** dest) {
+        if (!src) {
+                *dest = NULL;
+                return;
+        }
+        *dest = create_node(src->info);
+        bst_node_copia(src->left_child, &(*dest)->left_child);
+        bst_node_copia(src->right_child, &(*dest)->right_child);
+}       

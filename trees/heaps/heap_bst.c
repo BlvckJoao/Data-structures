@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "tree.h"
+#include "include/heap_bst.h"
 
 #define MAX_SIZE 100
 
