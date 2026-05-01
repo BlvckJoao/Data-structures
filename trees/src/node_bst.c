@@ -230,16 +230,11 @@ int bst_node_igual(Node* a, Node* b){
 BST* bst_copia(BST* t) {
         if (!t) return NULL;
         BST* copy = bst_create();
-        if (!copy) return NULL;
         bst_node_copia(t->root, &copy->root);
         return copy;
 }
 
-void bst_node_copia(Node* src, Node** dest) {
-        if (!src) {
-                *dest = NULL;
-                return;
-        }
+static void bst_node_copia(Node* src, Node** dest) {
         *dest = create_node(src->info);
         bst_node_copia(src->left_child, &(*dest)->left_child);
         bst_node_copia(src->right_child, &(*dest)->right_child);
