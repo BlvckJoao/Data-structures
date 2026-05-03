@@ -140,6 +140,7 @@ int bst_right_rotation(Node** n) {
         Node* new_root = (*n)->left_child;
         (*n)->left_child = new_root->right_child;
         new_root->right_child = *n;
+        
         *n = new_root;
 
         return 1;
